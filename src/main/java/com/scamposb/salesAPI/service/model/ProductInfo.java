@@ -9,21 +9,11 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Getter
 @Setter
-public class ProductFee {
+public class ProductInfo {
     private final long productID;
 
     private final int brandID;
 
-    private final int fee;
-
-    private final Date startDate;
-
-    private final Date endDate;
-
-    private final double price;
-
-    private final String currency;
-
-    private final int priority; 
+    private final Date infoDate;
 
 }
