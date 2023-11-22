@@ -1,4 +1,4 @@
-package com.scamposb.salesAPI.service.model;
+package com.scamposb.salesAPI.domain.model;
 
 import java.util.Date;
 

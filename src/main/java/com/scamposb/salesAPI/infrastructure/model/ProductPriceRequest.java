@@ -1,4 +1,4 @@
-package com.scamposb.salesAPI.controller.model;
+package com.scamposb.salesAPI.infrastructure.model;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

@@ -1,13 +1,13 @@
-package com.scamposb.salesAPI.service;
+package com.scamposb.salesAPI.domain;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
 
-import com.scamposb.salesAPI.repository.PricesRepository;
-import com.scamposb.salesAPI.service.mappers.PriceMappers;
-import com.scamposb.salesAPI.service.model.ProductFee;
-import com.scamposb.salesAPI.service.model.ProductInfo;
-import com.scamposb.salesAPI.model.Prices;
+import com.scamposb.salesAPI.adapters.PersistenceAdapter;
+import com.scamposb.salesAPI.domain.model.ProductFee;
+import com.scamposb.salesAPI.domain.model.ProductInfo;
+import com.scamposb.salesAPI.persistence.repository.PricesRepository;
+import com.scamposb.salesAPI.persistence.repository.model.Prices;
 
 @Service
 public class ProductFeeService {
@@ -20,7 +20,7 @@ public class ProductFeeService {
     
     public ProductFee getPriceByDate(ProductInfo productInfo) {
 
-        PriceMappers mapper = new PriceMappers();
+        PersistenceAdapter adapter = new PersistenceAdapter();
         List<Prices> feePrices = pricesRepository.findPriceByDate(productInfo.getProductID(), productInfo.getBrandID(),productInfo.getInfoDate());
         
 
@@ -30,7 +30,7 @@ public class ProductFeeService {
 
             for (Prices price: feePrices) {
                 if(majorPriority == null || (price.getPriority() > majorPriority.getPriority())){
-                    majorPriority = mapper.fromPriceToProductFeeMapper(price);
+                    majorPriority = adapter.fromPriceToProductFee(price);
 
                     continue;
                 }
@@ -40,7 +40,7 @@ public class ProductFeeService {
 
         }else if(feePrices.size() == 1){
 
-            return mapper.fromPriceToProductFeeMapper(feePrices.get(0));
+            return adapter.fromPriceToProductFee(feePrices.get(0));
         }
         
         return null;

@@ -1,4 +1,4 @@
-package com.scamposb.salesAPI.model;
+package com.scamposb.salesAPI.persistence.repository.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

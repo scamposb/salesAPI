@@ -1,4 +1,4 @@
-package com.scamposb.salesAPI.repository;
+package com.scamposb.salesAPI.persistence.repository;
 
 import java.util.Date;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.scamposb.salesAPI.model.Prices;
+import com.scamposb.salesAPI.persistence.repository.model.Prices;
 
 @Repository
 public interface PricesRepository extends JpaRepository<Prices,Integer>{

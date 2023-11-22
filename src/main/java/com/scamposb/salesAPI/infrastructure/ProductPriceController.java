@@ -1,4 +1,4 @@
-package com.scamposb.salesAPI.controller;
+package com.scamposb.salesAPI.infrastructure;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scamposb.salesAPI.controller.mappers.ProductPriceMapper;
-import com.scamposb.salesAPI.controller.model.ProductPriceRequest;
-import com.scamposb.salesAPI.controller.model.ProductPriceResponse;
-import com.scamposb.salesAPI.repository.PricesRepository;
-import com.scamposb.salesAPI.service.ProductFeeService;
-import com.scamposb.salesAPI.service.model.ProductFee;
-import com.scamposb.salesAPI.service.model.ProductInfo;
+import com.scamposb.salesAPI.adapters.*;
+import com.scamposb.salesAPI.application.PriceHandler;
+import com.scamposb.salesAPI.domain.model.ProductFee;
+import com.scamposb.salesAPI.domain.model.ProductInfo;
+import com.scamposb.salesAPI.infrastructure.model.ProductPriceRequest;
+import com.scamposb.salesAPI.infrastructure.model.ProductPriceResponse;
+import com.scamposb.salesAPI.persistence.repository.PricesRepository;
 
 @RestController
 @RequestMapping("/api")
@@ -30,17 +30,18 @@ public class ProductPriceController {
         @RequestParam(name = "brand_id", required = true) Integer brandID
         ){
         try{
-            ProductPriceMapper mapper = new ProductPriceMapper();
+            DomainAdapter domainAdapter = new DomainAdapter();
+            InfraAdapter infraAdapter = new InfraAdapter();
 
-            ProductFeeService pfService = new ProductFeeService(pricesRepository);
-            ProductInfo productInfo = mapper.fromProductPriceRequestToProductFee(new ProductPriceRequest(productID, brandID, requestDate));
-            ProductFee productFee = pfService.getPriceByDate(productInfo);   
+            ProductInfo productInfo = domainAdapter.fromProductPriceRequestToProductFee(new ProductPriceRequest(productID, brandID, requestDate));
+            PriceHandler priceHandler = new PriceHandler();
+            ProductFee productFee = priceHandler.getPriceByDateUseCase(pricesRepository, productInfo);  
             
             if(productFee == null){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } 
 
-            ProductPriceResponse productPriceResponse = mapper.fromProductFeetoProductPriceResponseMapper(productFee);
+            ProductPriceResponse productPriceResponse = infraAdapter.fromProductFeetoProductPriceResponseMapper(productFee);
 
             return new ResponseEntity<>(productPriceResponse, HttpStatus.OK); 
             

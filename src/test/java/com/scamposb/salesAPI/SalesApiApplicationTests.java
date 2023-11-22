@@ -13,9 +13,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.scamposb.salesAPI.service.ProductFeeService;
-import com.scamposb.salesAPI.service.model.ProductFee;
-import com.scamposb.salesAPI.service.model.ProductInfo;
+import com.scamposb.salesAPI.domain.ProductFeeService;
+import com.scamposb.salesAPI.domain.model.ProductFee;
+import com.scamposb.salesAPI.domain.model.ProductInfo;
 
 @SpringBootTest
 class SalesApiApplicationTests {
