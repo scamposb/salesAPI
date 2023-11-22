@@ -16,6 +16,8 @@ import com.scamposb.salesAPI.infrastructure.model.ProductPriceRequest;
 import com.scamposb.salesAPI.infrastructure.model.ProductPriceResponse;
 import com.scamposb.salesAPI.persistence.repository.PricesRepository;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/api")
 public class ProductPriceController {
@@ -38,6 +40,7 @@ public class ProductPriceController {
             ProductFee productFee = priceHandler.getPriceByDateUseCase(pricesRepository, productInfo);  
             
             if(productFee == null){
+
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } 
 
@@ -45,8 +48,15 @@ public class ProductPriceController {
 
             return new ResponseEntity<>(productPriceResponse, HttpStatus.OK); 
             
-        }catch(Exception e){
+        }
+        catch(ParseException e){
             System.out.println(e.getMessage());
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
            

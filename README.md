@@ -30,3 +30,7 @@ This is an API to manage prices in the Inditex Stores
     "price": 38.95
 }
 ```
+
+## About me
+I'm Sandra Campos, Software Engineer since almost 10 years in many languages (Java, PHP, GoLang). [Here](https://www.linkedin.com/in/sandra-campos-buil-73bb82a4/) is my LinkedIn in case you want to know more about me.
+Do not hesitate to contact me in case of there are doubts about the code. It's quite simple but I know everything could be better with more and more time to develop it ;-)
